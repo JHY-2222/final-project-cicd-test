@@ -52,7 +52,7 @@ public class SecurityConfig {
                 "http://localhost:3000",   // 로컬 테스트용
                 "http://localhost:5173",
                 "https://www.merge.io.kr",
-                "http://192.168.0.220:80",
+                "http://3.39.11.204:80",
                 "https://giveandtake.shinhanacademy.co.kr",
                 allowedOrigin              // .env나 properties에서 가져온 값
         ));
