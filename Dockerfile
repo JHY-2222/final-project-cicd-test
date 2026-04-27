@@ -9,7 +9,7 @@ RUN gradle build --no-daemon -x test
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 #COPY --from=build /home/final-project/build/libs/*.jar app.jar
-COPY --from=build /home/final-project/build/libs/*[!plain].jar app.jar
+COPY --from=build /home/final-project/build/libs/*-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "-Duser.timezone=Asia/Seoul", "app.jar"]
