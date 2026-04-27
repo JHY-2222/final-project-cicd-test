@@ -8,7 +8,8 @@ RUN gradle build --no-daemon -x test
 # 2. Run Stage
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /home/final-project/build/libs/*.jar app.jar
+#COPY --from=build /home/final-project/build/libs/*.jar app.jar
+COPY --from=build /home/final-project/build/libs/*[!plain].jar app.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "-Duser.timezone=Asia/Seoul", "app.jar"]
