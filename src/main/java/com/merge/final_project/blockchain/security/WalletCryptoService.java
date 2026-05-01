@@ -1,5 +1,6 @@
 package com.merge.final_project.blockchain.security;
 
+import com.merge.final_project.global.service.KmsSecretService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.web3j.crypto.Credentials;
@@ -24,8 +25,13 @@ public class WalletCryptoService {
     private final SecureRandom secureRandom = new SecureRandom();
     private final byte[] encryptionKey;
 
-    public WalletCryptoService(@Value("${wallet.crypto.secret:local-wallet-secret-change-me}") String secret) {
-        this.encryptionKey = sha256(secret.getBytes(StandardCharsets.UTF_8));
+    public WalletCryptoService(
+            @Value("${wallet.crypto.secret:local-wallet-secret-change-me}") String secret,
+            @Value("${wallet.crypto.secret.encrypted:false}") boolean secretEncrypted,
+            KmsSecretService kmsSecretService
+    ) {
+        String plainSecret = secretEncrypted ? kmsSecretService.decryptSecret(secret) : secret;
+        this.encryptionKey = sha256(plainSecret.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
